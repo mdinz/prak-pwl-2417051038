@@ -26,6 +26,47 @@ class UserController extends Controller
         return view('list_user', $data);
     }
 
+    public function edit($id)
+{
+    $user = User::findOrFail($id);
+    return view('edit_user', ['title' => 'Edit User', 'user' => $user]);
+}
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'nama'  => 'required',
+        'npm'   => 'required',
+        'kelas' => 'required',
+        // samakan dengan aturan validasi di store()
+    ]);
+
+    try {
+        $user = User::findOrFail($id);
+        $user->update([
+            'nama'  => $request->input('nama'),
+            'npm'   => $request->input('npm'),
+            'kelas' => $request->input('kelas'),
+        ]);
+
+        return redirect()->to('/user')->with('success', 'Data mahasiswa berhasil diperbarui!');
+    } catch (\Exception $e) {
+        return redirect()->to('/user')->with('error', 'Gagal memperbarui data mahasiswa!');
+    }
+}
+
+public function destroy($id)
+{
+    try {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->to('/user')->with('success', 'Data mahasiswa berhasil dihapus!');
+    } catch (\Exception $e) {
+        return redirect()->to('/user')->with('error', 'Gagal menghapus data mahasiswa!');
+    }
+}
+
     public function create()
     {
         $data = [
