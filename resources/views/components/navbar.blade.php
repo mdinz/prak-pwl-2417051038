@@ -9,6 +9,9 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('user/create') ? 'active fw-bold text-warning' : '' }}" href="/user/create">Tambah Pengguna</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('matakuliah*') ? 'active fw-bold text-warning' : '' }}" href="/matakuliah">Mata Kuliah</a>
+                </li>
             </ul>
         </div>
     </div>
